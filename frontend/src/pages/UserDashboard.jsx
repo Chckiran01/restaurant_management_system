@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+
+import {
+  getAvailableTablesApi,
+  createReservationApi,
+} from "../services/api";
 
 const TIME_SLOTS = [
   "12:00-14:00",
@@ -22,8 +26,6 @@ export default function UserDashboard() {
   const [tables, setTables] = useState([]);
   const [message, setMessage] = useState("");
 
-  const token = localStorage.getItem("token");
-
   /* =========================
      FETCH AVAILABLE TABLES
   ========================= */
@@ -31,14 +33,7 @@ export default function UserDashboard() {
     if (!date || !timeSlot) return;
 
     try {
-      const res = await axios.get(
-        "http://localhost:5000/api/reservations/available-tables",
-        {
-          params: { date, timeSlot },
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-
+      const res = await getAvailableTablesApi(date, timeSlot);
       setTables(res.data);
     } catch (err) {
       console.error(err);
@@ -57,18 +52,12 @@ export default function UserDashboard() {
     if (!window.confirm(`Book Table #${table.tableNumber}?`)) return;
 
     try {
-      await axios.post(
-        "http://localhost:5000/api/reservations",
-        {
-          date,
-          timeSlot,
-          guests: table.capacity,
-          tableId: table._id,
-        },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      await createReservationApi({
+        date,
+        timeSlot,
+        guests: table.capacity,
+        tableId: table._id,
+      });
 
       setMessage(
         `Table #${table.tableNumber} (${table.capacity} seats) booked successfully`

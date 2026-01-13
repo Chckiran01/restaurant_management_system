@@ -1,22 +1,17 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+
+import {
+  getMyReservationsApi,
+  cancelMyReservationApi,
+} from "../services/api";
 
 export default function MyReservations() {
   const [reservations, setReservations] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const token = localStorage.getItem("token");
-
   const fetchReservations = async () => {
     try {
-      const res = await axios.get(
-        "http://localhost:5000/api/reservations/my",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const res = await getMyReservationsApi();
       setReservations(res.data);
     } catch (err) {
       console.error(err);
@@ -33,15 +28,7 @@ export default function MyReservations() {
     if (!window.confirm("Cancel this reservation?")) return;
 
     try {
-      await axios.put(
-        `http://localhost:5000/api/reservations/${id}/cancel`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      await cancelMyReservationApi(id);
       fetchReservations();
     } catch (err) {
       alert("Failed to cancel reservation");

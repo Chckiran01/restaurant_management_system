@@ -1,5 +1,12 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+
+import {
+  getAllReservationsApi,
+  getReservationsByDateApi,
+  getAvailableTablesApi,
+  adminCancelReservationApi,
+  adminUpdateReservationApi,
+} from "../services/api";
 
 const TIME_SLOTS = [
   "12:00-14:00",
@@ -14,24 +21,17 @@ export default function AdminDashboard() {
   const [reservations, setReservations] = useState([]);
   const [tables, setTables] = useState([]);
 
-  // Modal update state
   const [editingReservation, setEditingReservation] = useState(null);
   const [availableTables, setAvailableTables] = useState([]);
-
-  const token = localStorage.getItem("token");
 
   /* ============================
      FETCH RESERVATIONS
   ============================ */
   const fetchReservations = async () => {
     try {
-      const url = date
-        ? `http://localhost:5000/api/reservations/date/${date}`
-        : `http://localhost:5000/api/reservations`;
-
-      const res = await axios.get(url, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = date
+        ? await getReservationsByDateApi(date)
+        : await getAllReservationsApi();
 
       setReservations(res.data);
     } catch (err) {
@@ -45,14 +45,7 @@ export default function AdminDashboard() {
   const fetchTables = async () => {
     if (!date || !timeSlot) return;
 
-    const res = await axios.get(
-      "http://localhost:5000/api/reservations/available-tables",
-      {
-        params: { date, timeSlot },
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    );
-
+    const res = await getAvailableTablesApi(date, timeSlot);
     setTables(res.data);
   };
 
@@ -60,14 +53,7 @@ export default function AdminDashboard() {
      FETCH TABLES FOR UPDATE MODAL
   ============================ */
   const fetchAvailableTablesForEdit = async (date, timeSlot) => {
-    const res = await axios.get(
-      "http://localhost:5000/api/reservations/available-tables",
-      {
-        params: { date, timeSlot },
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    );
-
+    const res = await getAvailableTablesApi(date, timeSlot);
     setAvailableTables(res.data);
   };
 
@@ -85,14 +71,7 @@ export default function AdminDashboard() {
   const cancelReservation = async (id) => {
     if (!window.confirm("Cancel this reservation?")) return;
 
-    await axios.put(
-      `http://localhost:5000/api/reservations/${id}/admin-cancel`,
-      {},
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    );
-
+    await adminCancelReservationApi(id);
     fetchReservations();
   };
 
@@ -100,17 +79,11 @@ export default function AdminDashboard() {
      SAVE UPDATED RESERVATION
   ============================ */
   const saveUpdate = async () => {
-    await axios.put(
-      `http://localhost:5000/api/reservations/${editingReservation._id}/admin-update`,
-      {
-        date: editingReservation.date,
-        timeSlot: editingReservation.timeSlot,
-        tableId: editingReservation.table._id,
-      },
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    );
+    await adminUpdateReservationApi(editingReservation._id, {
+      date: editingReservation.date,
+      timeSlot: editingReservation.timeSlot,
+      tableId: editingReservation.table._id,
+    });
 
     setEditingReservation(null);
     fetchReservations();
