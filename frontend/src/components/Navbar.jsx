@@ -13,36 +13,46 @@ function Navbar() {
     navigate("/");
   };
 
-  const commonLinks = (
-    <>
-      <Link to="/" onClick={() => setOpen(false)} className="block py-2">
-        Home
+const commonLinks = (
+  <>
+    <Link to="/" onClick={() => setOpen(false)} className="block py-2">
+      Home
+    </Link>
+
+    <Link to="/reserve" onClick={() => setOpen(false)} className="block py-2">
+      Reserve
+    </Link>
+
+    {token && role === "user" && (
+      <Link
+        to="/my-reservations"
+        onClick={() => setOpen(false)}
+        className="block py-2"
+      >
+        My Reservations
       </Link>
+    )}
 
-      <Link to="/reserve" onClick={() => setOpen(false)} className="block py-2">
-        Reserve
+    {token && role === "admin" && (
+      <Link
+        to="/admin"
+        onClick={() => setOpen(false)}
+        className="block py-2"
+      >
+        Admin Dashboard
       </Link>
+    )}
 
-      {token && role === "admin" && (
-        <Link
-          to="/admin"
-          onClick={() => setOpen(false)}
-          className="block py-2"
-        >
-          Admin Dashboard
-        </Link>
-      )}
-
-      {token && (
-        <button
-          onClick={handleLogout}
-          className="mt-2 bg-red-600 px-4 py-2 rounded w-full text-left"
-        >
-          Logout
-        </button>
-      )}
-    </>
-  );
+    {token && (
+      <button
+        onClick={handleLogout}
+        className="mt-2 bg-red-600 px-4 py-2 rounded w-full text-left"
+      >
+        Logout
+      </button>
+    )}
+  </>
+);
 
   return (
     <nav className="fixed top-0 w-full bg-black text-white z-50">
