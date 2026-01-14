@@ -9,6 +9,8 @@ Live Links
   
   GitHub Repository: https://github.com/Chckiran01/restaurant_management_system
   
+  Backend Live Link: https://restaurant-backend-fs12.onrender.com/
+  
 Tech Stack
 
 Frontend
@@ -165,6 +167,8 @@ email
 password
 
     123456
+
+Note: Keep Backend deployed live link active while accessing the frontend live link. 
 
 Author
 
