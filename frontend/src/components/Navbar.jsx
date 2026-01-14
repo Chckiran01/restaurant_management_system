@@ -12,27 +12,21 @@ function Navbar() {
 
   return (
     <nav className="fixed top-0 w-full bg-black text-white z-50">
-      <div className="max-w-7xl mx-auto flex justify-between items-center px-4 py-3">
+      <div className="max-w-7xl mx-auto px-4 py-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        
         {/* Logo */}
-        <Link to="/" className="font-bold text-lg">
+        <Link to="/" className="font-bold text-lg text-center sm:text-left">
           Vibe
         </Link>
 
         {/* Links */}
-        <div className="flex items-center gap-3 sm:gap-6 text-sm sm:text-base">
-          <Link to="/" className="hover:text-gray-300">
-            Home
-          </Link>
+        <div className="flex flex-wrap justify-center sm:justify-end gap-4 items-center">
+          <Link to="/">Home</Link>
 
           {!token && (
             <>
-              <Link to="/login" className="hover:text-gray-300">
-                Login
-              </Link>
-              <Link
-                to="/register"
-                className="text-green-400 hover:text-green-300"
-              >
+              <Link to="/login">Login</Link>
+              <Link to="/register" className="text-green-400">
                 Register
               </Link>
             </>
@@ -40,17 +34,11 @@ function Navbar() {
 
           {token && role === "user" && (
             <>
-              <Link to="/reserve" className="hover:text-gray-300">
-                Reserve
-              </Link>
-
-              <Link to="/my-reservations" className="hover:text-gray-300">
-                My Reservations
-              </Link>
-
+              <Link to="/reserve">Reserve</Link>
+              <Link to="/my-reservations">My Reservations</Link>
               <button
                 onClick={handleLogout}
-                className="bg-red-600 hover:bg-red-700 px-3 py-1 rounded"
+                className="bg-red-600 px-3 py-1 rounded"
               >
                 Logout
               </button>
@@ -59,17 +47,11 @@ function Navbar() {
 
           {token && role === "admin" && (
             <>
-              <Link to="/reserve" className="hover:text-gray-300">
-                Reserve
-              </Link>
-
-              <Link to="/admin" className="hover:text-gray-300">
-                Admin Dashboard
-              </Link>
-
+              <Link to="/reserve">Reserve</Link>
+              <Link to="/admin">Admin Dashboard</Link>
               <button
                 onClick={handleLogout}
-                className="bg-red-600 hover:bg-red-700 px-3 py-1 rounded"
+                className="bg-red-600 px-3 py-1 rounded"
               >
                 Logout
               </button>

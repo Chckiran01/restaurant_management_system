@@ -90,7 +90,7 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white pt-24 px-6 pb-12">
+    <div className="min-h-screen bg-gray-900 text-white pt-24 px-4 sm:px-6 pb-12">
       <div className="max-w-7xl mx-auto">
 
         <h1 className="text-3xl font-bold mb-6">
@@ -103,7 +103,7 @@ export default function AdminDashboard() {
         </label>
         <input
           type="date"
-          className="text-black p-2 rounded mb-6"
+          className="text-black p-2 rounded mb-6 w-full sm:w-auto"
           value={date}
           onChange={(e) => setDate(e.target.value)}
         />
@@ -136,7 +136,7 @@ export default function AdminDashboard() {
               Select date & time slot
             </p>
           ) : (
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
               {tables.map((table) => (
                 <div
                   key={table._id}
@@ -160,18 +160,17 @@ export default function AdminDashboard() {
           All Reservations
         </h2>
 
-        <div className="overflow-x-auto w-full">
-  <table className="min-w-[700px] w-full border border-gray-700">
-
+        <div className="overflow-x-auto">
+          <table className="min-w-[750px] w-full border border-gray-700">
             <thead className="bg-gray-800">
               <tr>
-                <th>User</th>
-                <th>Date</th>
-                <th>Time</th>
-                <th>Table</th>
-                <th>Seats</th>
-                <th>Status</th>
-                <th>Action</th>
+                <th className="p-2 text-sm whitespace-nowrap">User</th>
+                <th className="p-2 text-sm whitespace-nowrap">Date</th>
+                <th className="p-2 text-sm whitespace-nowrap">Time</th>
+                <th className="p-2 text-sm whitespace-nowrap">Table</th>
+                <th className="p-2 text-sm whitespace-nowrap">Seats</th>
+                <th className="p-2 text-sm whitespace-nowrap">Status</th>
+                <th className="p-2 text-sm whitespace-nowrap">Action</th>
               </tr>
             </thead>
 
@@ -181,23 +180,33 @@ export default function AdminDashboard() {
                   key={r._id}
                   className="text-center border-t border-gray-700"
                 >
-                  <td className="p-2">{r.user?.email}</td>
-                  <td>{r.date}</td>
-                  <td>{r.timeSlot}</td>
-                  <td>{r.table?.tableNumber}</td>
-                  <td>{r.table?.capacity}</td>
+                  <td className="p-2 text-sm whitespace-nowrap">
+                    {r.user?.email}
+                  </td>
+                  <td className="p-2 text-sm whitespace-nowrap">
+                    {r.date}
+                  </td>
+                  <td className="p-2 text-sm whitespace-nowrap">
+                    {r.timeSlot}
+                  </td>
+                  <td className="p-2 text-sm whitespace-nowrap">
+                    {r.table?.tableNumber}
+                  </td>
+                  <td className="p-2 text-sm whitespace-nowrap">
+                    {r.table?.capacity}
+                  </td>
                   <td
-                    className={
+                    className={`p-2 text-sm whitespace-nowrap ${
                       r.status === "active"
                         ? "text-green-400"
                         : "text-red-400"
-                    }
+                    }`}
                   >
                     {r.status}
                   </td>
-                  <td className="space-x-2">
+                  <td className="p-2 text-sm whitespace-nowrap">
                     {r.status === "active" && (
-                      <>
+                      <div className="flex flex-col sm:flex-row gap-2 justify-center">
                         <button
                           onClick={() => {
                             setEditingReservation(r);
@@ -217,7 +226,7 @@ export default function AdminDashboard() {
                         >
                           Cancel
                         </button>
-                      </>
+                      </div>
                     )}
                   </td>
                 </tr>
@@ -226,9 +235,7 @@ export default function AdminDashboard() {
           </table>
         </div>
 
-        {/* ======================
-           UPDATE MODAL POPUP
-        ====================== */}
+        {/* UPDATE MODAL */}
         {editingReservation && (
           <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
             <div className="bg-white text-black rounded-lg w-full max-w-md p-6 relative">
@@ -294,18 +301,19 @@ export default function AdminDashboard() {
               <div className="flex justify-end gap-3">
                 <button
                   onClick={() => setEditingReservation(null)}
-                  className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+                  className="px-4 py-2 bg-gray-300 rounded"
                 >
                   Cancel
                 </button>
 
                 <button
                   onClick={saveUpdate}
-                  className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+                  className="px-4 py-2 bg-green-600 text-white rounded"
                 >
                   Save Changes
                 </button>
               </div>
+
             </div>
           </div>
         )}
