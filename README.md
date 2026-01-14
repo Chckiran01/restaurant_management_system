@@ -158,9 +158,13 @@ Run frontend:
 
 Credentials for Admin
 
-email: test@example.com
+email
+    
+      test@example.com
 
-password: 123456
+password
+
+    123456
 
 Author
 
