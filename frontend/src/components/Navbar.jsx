@@ -12,19 +12,18 @@ function Navbar() {
 
   return (
     <nav className="fixed top-0 w-full bg-black text-white z-50">
-      <div className="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
+      <div className="max-w-7xl mx-auto flex justify-between items-center px-4 py-3">
         {/* Logo */}
         <Link to="/" className="font-bold text-lg">
-          Vibe 
+          Vibe
         </Link>
 
         {/* Links */}
-        <div className="space-x-6 flex items-center">
+        <div className="flex items-center gap-3 sm:gap-6 text-sm sm:text-base">
           <Link to="/" className="hover:text-gray-300">
             Home
           </Link>
 
-          {/* Guest */}
           {!token && (
             <>
               <Link to="/login" className="hover:text-gray-300">
@@ -39,7 +38,6 @@ function Navbar() {
             </>
           )}
 
-          {/* User */}
           {token && role === "user" && (
             <>
               <Link to="/reserve" className="hover:text-gray-300">
@@ -59,12 +57,12 @@ function Navbar() {
             </>
           )}
 
-          {/* Admin */}
           {token && role === "admin" && (
             <>
-            <Link to="/reserve" className="hover:text-gray-300">
-      Reserve
-    </Link>
+              <Link to="/reserve" className="hover:text-gray-300">
+                Reserve
+              </Link>
+
               <Link to="/admin" className="hover:text-gray-300">
                 Admin Dashboard
               </Link>

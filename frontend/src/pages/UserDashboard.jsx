@@ -70,8 +70,7 @@ export default function UserDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white pt-24 px-6 pb-12">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-gray-900 text-white pt-20 sm:pt-24 px-4 sm:px-6 pb-12">    <div className="max-w-7xl mx-auto">
 
         <h1 className="text-3xl font-bold mb-6">
           Reserve a Table
@@ -134,7 +133,8 @@ export default function UserDashboard() {
             No tables available for selected slot
           </p>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+
             {tables.map((table) => (
               <div
                 key={table._id}

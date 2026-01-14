@@ -160,8 +160,9 @@ export default function AdminDashboard() {
           All Reservations
         </h2>
 
-        <div className="overflow-x-auto">
-          <table className="w-full border border-gray-700">
+        <div className="overflow-x-auto w-full">
+  <table className="min-w-[700px] w-full border border-gray-700">
+
             <thead className="bg-gray-800">
               <tr>
                 <th>User</th>
