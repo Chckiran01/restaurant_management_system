@@ -154,7 +154,14 @@ Run frontend:
         Admin analytics dashboard
         
         Better error handling and loading states
-        
+
+
+Credentials for Admin
+
+email: test@example.com
+
+password: 123456
+
 Author
 
 Chandra Kiran (Chckiran01)
